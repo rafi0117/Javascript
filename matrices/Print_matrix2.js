@@ -1,9 +1,9 @@
 import readlineSync from "readline-sync"
-
+import color from 'colors-cli'
 
 function MatrixInput(name){
-    let rows = readlineSync.questionInt(`Enter ${name} number of rows: `)
-    let cols = readlineSync.questionInt(`Enter  ${name} number of columns: `)
+    let rows = readlineSync.questionInt(color.magenta_bbt(`Enter ${name} number of rows: `))
+    let cols = readlineSync.questionInt(color.magenta_bbt(`Enter  ${name} number of columns: `))
     console.log(`Given matrix is ${name} which has ${rows} x ${cols} dimension`)
     
     let Matrix = new Array(rows) //[_ _ _]
@@ -15,7 +15,7 @@ function MatrixInput(name){
 
     for (let i=0;i<rows;i++){
         for (let j=0;j<cols;j++){
-            Matrix[i][j] = readlineSync.questionInt(`Enter element of ${name} ${i},${j}: `)
+            Matrix[i][j] = readlineSync.questionInt(color.cyan(`Enter element of ${name} ${color.green(i)},${color.green(j)}: `))
         }
     }
     return Matrix
@@ -28,7 +28,7 @@ function PrintMatrix(matrix){
     for (let i=0;i<matrix.length;i++){
         var res = ""
         for (let j=0;j<matrix[i].length;j++){
-            res+=(matrix[i][j])+' '
+            res+=(color.cyan(matrix[i][j]))+' '
         }
         console.log(res)
     }
@@ -36,5 +36,5 @@ function PrintMatrix(matrix){
 // PrintMatrix(mat)
 
 
-export default MatrixInput;
+// export default MatrixInput;
 export {MatrixInput, PrintMatrix}
