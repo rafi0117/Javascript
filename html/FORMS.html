@@ -4,22 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Form</title>
+    <style>
+        body { display: inline;
+            background-color: antiquewhite;
+            padding: 10px;
+             }
+             .forms{
+                border-style:dashed;
+                padding: 10px;
+                margin: 10px;
+                font-size: normal;
+                width: 40%;
+                float: left;
+             }
+             #color_hover:hover{
+                background-color: aqua;
+                
+             }
+             #color_hover{
+                font-size: large;
+             }
+            #img{
+               width: 50%; 
+               float:right;
+            }
+    </style>
 </head>
 <body>
-    <form>
+    <center>
+        <h1>FORMS</h1>
+    </center>
+
+    <div class="forms">
+    <form action="/action_page.php">
         <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="fname" placeholder="Enter your first name"><br>
+        <input type="text" id="fname" name="fname" placeholder="Enter your first name"><br><br>
         <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="lname" placeholder="Enter your last name"><br>
+        <input type="text" id="lname" name="lname" placeholder="Enter your last name"><br><br>
         <label for="email">Email:</label><br>
-        <input type="text" id="email" name="email" placeholder="Enter your email"><br>
+        <input type="text" id="email" name="email" placeholder="Enter your email"><br><br>
         <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" placeholder="Enter your password"><br>
+        <input type="password" id="password" name="password" placeholder="Enter your password"><br><br>
         <label for="website">website:</label><br>
-        <input type="url" id="password" name="website" placeholder="Enter your website"><br>
-        <label for="longtext">Your reasons:</label><br>
-        <textarea name="formatfortext" placeholder="Enter your text"></textarea><br>
+        <input type="url" id="password" name="website" placeholder="Enter your website"><br><br>
+        <label for="longtext" id="top">Your reasons:</label><br>
+        <textarea name="formatfortext" placeholder="Enter your text"></textarea><br><br>
         <p>Please select your gender:</p>
           <input type="radio" id="html" name="gender" value="HTML">
           <label for="html">Male</label><br>
@@ -52,8 +82,11 @@
         <input type="file" id="myfile" name="myfile"><br><br>
         <label for="date">Select a date:</label>
         <input type="date" id="date" name="date"><br><br>
-        <input type="submit" value="Submit">
-       
-        </form>
+        <input type="submit" id="color_hover" value="Submit">
+      </form>
+      </div>
+      <div>
+        <img src="LOGO.png" alt="image" id="img">
+      </div>
 </body>
 </html>

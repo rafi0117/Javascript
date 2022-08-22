@@ -1,0 +1,9 @@
+h1,h2{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(251, 0, 255);
+}
+p{
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(0, 17, 255);
+    font-size:x-large;
+}
