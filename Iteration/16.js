@@ -157,15 +157,16 @@
 // }
 
 
-let n = 5;
-let a = "";
-for (let i = 1; i < n; i++) {
-  for (let j = 0; j < n - i; j++) {
-    a = a  + " ";
-  }
-  for (let k = 0; k < i; k++) {
-    a = a +"*";
-  }
-  a += "\n";
-}
-console.log(a);
+// let n = 5;
+// let a = "";
+// for (let i = 1; i <=  n; i++) {
+//   for (let j = 0; j < n - i; j++) {
+//     a = a  + " ";
+//   }
+//   for (let k = 0; k < i; k++) {
+//     a = a +"*";
+//   }
+//   a += "\n";
+// }
+// console.log(a);
+

@@ -66,21 +66,21 @@
 //     console.log('Not a multiple of 3 and 5')
 // }
 
-var a=15
+// var a=15
 
-if ((a%3)==0)
-{
-    console.log('multiple of 3')
-}
-else if ((a%5)==0)
-{
-    console.log('multiple of 5')
-}
-else if (((a%3)==0) && ((a%5)==0))
-{
-    console.log('multiple of 3 and 5')
-}
-else
-{
-    console.log('Not a multiple of 3 and 5')
-}
+// if ((a%3)==0)
+// {
+//     console.log('multiple of 3')
+// }
+// else if ((a%5)==0)
+// {
+//     console.log('multiple of 5')
+// }
+// else if (((a%3)==0) && ((a%5)==0))
+// {
+//     console.log('multiple of 3 and 5')
+// }
+// else
+// {
+//     console.log('Not a multiple of 3 and 5')
+// }

@@ -38,8 +38,8 @@
 
 
 
-a = [1,2,3,4,5,6,7,8]
-s = 3
+// a = [1,2,3,4,5,6,7,8]
+// s = 3
 // start = a[0]
 // end = a[7]
 // s = 1
@@ -57,25 +57,51 @@ s = 3
 //     console.log("lesser")
 //     }
 
-function Binary_search(a,s)
-{
-    start = 0
-    end = (a.lenght-1)
-    // mid = Math.floor((start+end)/2)
-    while (start <= end)
-    {    mid = Math.floor((start+end)/2)
+// function Binary_search(a,s)
+// {
+//     start = 0
+//     end = (a.lenght-1)
+//     // mid = Math.floor((start+end)/2)
+//     while (start <= end)
+//     {    mid = Math.floor((start+end)/2)
 
-    if (a[mid] == s)
-    {
-        return mid
-    }
-    else if(a[mid]>s)
-    {
-        end = mid - 1
-    }
-    else (a[mid]<s)
-    {   
-        start = mid + 1
-    }
- }   
-}console.log(Binary_search(a,s))
+//     if (a[mid] == s)
+//     {
+//         return mid
+//     }
+//     else if(a[mid]>s)
+//     {
+//         end = mid - 1
+//     }
+//     else (a[mid]<s)
+//     {   
+//         start = mid + 1
+//     }
+//  }   
+// }console.log(Binary_search(a,s))
+
+
+
+// WAP to mumtiply 2 numbers? without using (*)
+
+
+// function multiply(a,b){
+//     return a / (1 / b);
+// }
+// var result = multiply(4,4)
+// console.log(result)
+// // -------------------------------
+//   function multiply(a,b)
+//    res = b;
+// //   console.log(a,b)
+//   while (a>1);
+//   {
+//     a = Math.floor(a/2);
+//     b = b*2;
+//     res += b
+//     if(a%2!=0){
+//     console.log(a,b);
+//     }
+//   }
+//   return result = multiply(12,13);
+// //   --------------------------------
