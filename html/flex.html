@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexbox</title>
+    <style>
+    .container{
+        height: 300px;
+        display: flex;
+        background-color: aquamarine;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+      /* .container {
+        height: 300px;
+        display: flex;
+        background-color: aqua;
+        flex-direction: row; */
+        /* justify-content: center;
+        align-items: center; */
+      /* } */
+      .container div {
+        background-color: #f1f1f1;
+        height: 70px;
+        width: 100%;
+        margin: 10px;
+        text-align: center;
+        line-height: 50px;
+        font-size: 30px;
+        flex-shrink: 3;    
+    }
+      @media only screen and (max-width: 600px) {
+        .container {
+          background-color: lightblue;
+          flex-direction: column;
+        }
+        .container div{
+            width: 80%;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <!-- <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+      <div>10</div>
+      <div>11</div>
+      <div>12</div> -->
+    </div>
+  </body>
+</html>

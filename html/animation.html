@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            width: 250px;
+            height: 250px;
+            background-color:darkblue;
+            font-size: 200px;
+            text-align: center;
+
+            animation: myslide;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+            animation-play-state: running;
+            animation-delay: 1s;
+            animation-timing-function: ease-out;
+            animation:   myslide 6s ease-in-out 1s infinite running, mycolor 4s linear 0s infinite running;
+
+        }
+
+    @keyframes myslide {
+            from{margin-left: 100%;}
+            to{margin-left: -50%;}
+        }
+
+    @keyframes mycolor {
+    20%{background-color: orange;}
+    40%{background-color: yellow;}
+    60%{background-color: green;}
+    80%{ background-color: blue;}
+    100%{background-color: purple;}
+    50%{
+        opacity: 0;
+    }
+}
+        
+
+    </style>
+</head>
+<body>
+    <h1>Hi</h1>
+</body>
+</html>
