@@ -1,55 +1,81 @@
 import readlineSync from "readline-sync";
 
-function Base64Encoding(){
-    // Step-1=> Accept string input
-    let inputString=readlineSync.question("Enter the string you want to encode :")
-    // Step-2=> Split Character
-    let splitString=inputString.split("");
-    // console.log("The String is :",splitString);
-    // ASCII Decimals
-    let ASCIIcodes=splitString.map((char)=>char.charCodeAt());
-    // console.log("The ASCII array is ",ASCIIcodes);
-    // Converting Decimal ASCII to Binary
-    let Binarycodes=ASCIIcodes.map((number)=>number.toString(2));
-    // console.log("The Binarycodes : ",Binarycodes);
-    // Convert the binary to 8-bit
-    let Binarycode8bit=Binarycodes.map((bin)=>{
-        while (bin.length<8){
-            bin="0"+bin;
-        }
-        return bin;
-    })
-    // console.log("Binary in 8-bit :",Binarycode8bit)
-    let OneBinary=Binarycode8bit.join("").split("");
-    // console.log(OneBinary);
-    let Binarycode6bit=[];
-    while (OneBinary.length!=0){
-        Binarycode6bit.push(OneBinary.splice(0,6).join(""));
+function base64Encoding() {
+  //Step : 1 Accept String Input
+  let inputString = readlineSync.question(
+    "Enter the String you want to Encode : "
+  );
+  while (!inputString) {
+    inputString = readlineSync.question(
+      "Input Cannot be Empty, Please Try Again  : "
+    );
+  }
+  //Split Characters
+  let splitString = inputString.split("");
+  // console.log("The String is : ", splitString);
+
+  //Get ASCII Decimals
+  let ASCIICodes = splitString.map((char) => char.charCodeAt());
+  // let ASCIICodes=splitString.map(function(char){
+  //     return char.charCodeAt();
+  // })
+  // console.log("The ASCII Array is : ", ASCIICodes);
+
+  //Converting Decimal ASCII To Binary
+  let binaryCodes = ASCIICodes.map((num) => num.toString(2));
+  // console.log("Binary Codes: ", binaryCodes);
+
+  //Convert The Binaries to 8 Bits
+  let binaryCode8Bit = binaryCodes.map((bin) => {
+    while (bin.length < 8) {
+      bin = "0" + bin;
     }
-    console.log("Binary in 6-bits :",Binarycode6bit)
-    // Divide in 6-bits
-    // Padding and add =
-    let lastElement=Binarycode6bit[Binarycode6bit.length-1];
-    if (lastElement.length!=6){
-        var counter=0;
-        while (lastElement.length<6){
-            lastElement=lastElement+"0";
-            counter++;
-        }
-        Binarycode6bit[Binarycode6bit.length-1]=lastElement;
+    return bin;
+  });
+  // console.log("Binaries in 8 Bits are : ", binaryCode8Bit);
+
+  let oneBinary = binaryCode8Bit.join("").split("");
+  // console.log(oneBinary);
+
+  //Splitting into 6 Bits
+  let binaryCode6Bit = [];
+  while (oneBinary.length != 0) {
+    binaryCode6Bit.push(oneBinary.splice(0, 6).join(""));
+  }
+  // console.log("Binaries in 6 Bits are : ", binaryCode6Bit);
+
+  //Padding and add =
+  let lastElement = binaryCode6Bit[binaryCode6Bit.length - 1];
+  if (lastElement.length != 6) {
+    var counter = 0;
+    while (lastElement.length < 6) {
+      lastElement = lastElement + "0";
+      counter++;
     }
-    console.log(Binarycode6bit)
-    let bintoDecimal=Binarycode6bit.map((str)=>parseInt(str,2));
-    console.log("The conversion is ",bintoDecimal);
-    let Base64="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-    let Base64final=bintoDecimal.map((dec)=>Base64[dec]);
-    console.log("Base 64 String : ",Base64final);
-    if (counter==2){
-        Base64final.push("=");
-    }else{
-        Base64final.push("==");
-    }
-    let finalBase64String=Base64final.join("");
-    console.log("your Base 64 Output is : ",finalBase64String)
+    binaryCode6Bit[binaryCode6Bit.length - 1] = lastElement;
+  }
+  // console.log("Binaries in 6 Bits are : ", binaryCode6Bit);
+
+  let bintoDecimal = binaryCode6Bit.map((str) => parseInt(str, 2));
+  // console.log("Base 64 Decimals : ", bintoDecimal);
+
+  let base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+  //Decimal to BASE 64
+  let base64final = bintoDecimal.map((dec) => base64[dec]);
+  // console.log("Base 64 String : ", base64final);
+  if (counter == 2) {
+    base64final.push("=");
+  } else if (counter == 4) {
+    base64final.push("==");
+  }
+
+  let finalBase64String = base64final.join("");
+  // console.log("Your Base 64 Output is : ", finalBase64String);
+
+  return finalBase64String;
 }
-Base64Encoding()
+
+// base64Encoding();
+
+export default base64Encoding;
