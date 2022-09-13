@@ -1,0 +1,29 @@
+[
+    {
+        "user_id": "I1MF23mn10Ue7Onw",
+        "firstname": "Abdul",
+        "lastname": "Rafi",
+        "password": "$2b$12$6h4G7pNDFkqLrbLj7fsySuQ/WxFsSDkZU7Kw8dK/WUdtKHpsdVOeK",
+        "address": "masabtank",
+        "phone": "+917702853307",
+        "email": "itsabdulrafii@gmail.com",
+        "tasks": []
+    },
+    {
+        "user_id": "uU2LORnjwtdkkVJx",
+        "firstname": "Abdul",
+        "lastname": "Rafi",
+        "password": "$2b$12$DCtlKNASDe4/8PifEuckCe7O90e9gWciDi1vz65WTeKmCDyW7HGqC",
+        "address": "masabtank",
+        "phone": "+919618710198",
+        "email": "itsabdulrafi@gmail.com",
+        "tasks": [
+            {
+                "task_id": "dET5B9sK5wF5wJ",
+                "task_name": "task1",
+                "deadline": "2022-09-13T12:29:51.000Z",
+                "isCompleted": false
+            }
+        ]
+    }
+]
