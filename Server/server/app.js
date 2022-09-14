@@ -148,7 +148,7 @@ app.post("/api/task", async (req, res) => {
             return res.status(400).json({ error: "Some Fields are Missing" });
         }
 
-        console.log(task_name, deadline);
+        console.log(task_name,":", deadline);
 
 
         let utc_deadline = new Date(deadline);
@@ -157,11 +157,38 @@ app.post("/api/task", async (req, res) => {
 
         let present_time = new Date();
         // console.log(utc_deadline < present_time);
+
         if (utc_deadline == "Invalid Date" || (utc_deadline < present_time)) {
             return res.status(400).json({ error: "Invalid Date Entered" });
         }
+
+        let diff = utc_deadline-present_time;
+        console.log("Diff :",diff)
+
+        let mins = diff/(1000*60);
+        console.log("Mins :",mins)
+
+        let days = diff/(1000*60*60*24);
+        console.log("Days :",days)
         // console.log(utc_deadline);
 
+        if ((mins < 30) || (days > 30)){
+            return res.status(400).json({ error: "Invalid Date Entered" });
+        }
+       
+        let reminders = [];
+
+        let reminder1 = new Date((+present_time)+(diff/4));
+        // console.log("reminder 1: ",reminder1)
+
+        let reminder2 = new Date((+present_time)+(diff/2));
+        // console.log("reminder 2: ",reminder2)
+
+        let reminder3 = new Date((+present_time)+(diff/(4/3)));
+        // console.log("reminder 3: ",reminder3)
+
+        reminders.push(reminder1,reminder2,reminder3,utc_deadline);
+        console.log(reminders)
         //Reading File Data
         let fileData = await fs.readFile("data.json");
         fileData = JSON.parse(fileData);
@@ -173,14 +200,15 @@ app.post("/api/task", async (req, res) => {
             task_id: randomString(14),
             task_name,
             deadline: utc_deadline,
-            isCompleted: false
+            isCompleted: false.valueOf,
+            reminders
         }
 
         // console.log(task_data);
         userFound.tasks.push(task_data);
 
         // console.log(userFound);
-        console.log(fileData);
+        // console.log(fileData);
         await fs.writeFile("data.json", JSON.stringify(fileData));
         res.status(200).json({ success: "Task was Added" })
     } catch (error) {
