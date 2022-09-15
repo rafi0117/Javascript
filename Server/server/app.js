@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 
 
 import randomString from "./utils/randomString.js";
+import { scheduleJob } from "node-schedule";
 
 const app = express();
 
@@ -87,6 +88,16 @@ app.post("/api/signup", async (req, res) => {
 })
 
 
+/*
+METHOD : POST
+PUBLIC
+API Endpoint : /api/login
+Body : 
+
+email
+password 
+*/
+
 app.post("/api/login", async (req, res) => {
     try {
         let { email, password } = req.body;
@@ -128,6 +139,18 @@ app.post("/api/login", async (req, res) => {
     }
 })
 
+/*
+METHOD : POST
+PRIVATE
+auth-token
+API Endpoint : /api/task
+
+Body : 
+task_name
+deadline
+*/
+
+
 app.post("/api/task", async (req, res) => {
     try {
         //Check for Authorization 
@@ -148,7 +171,7 @@ app.post("/api/task", async (req, res) => {
             return res.status(400).json({ error: "Some Fields are Missing" });
         }
 
-        console.log(task_name,":", deadline);
+        //    console.log(task_name, deadline);
 
 
         let utc_deadline = new Date(deadline);
@@ -156,39 +179,49 @@ app.post("/api/task", async (req, res) => {
         //Check if its Backdated or Not
 
         let present_time = new Date();
+        // console.log(present_time);
         // console.log(utc_deadline < present_time);
 
         if (utc_deadline == "Invalid Date" || (utc_deadline < present_time)) {
             return res.status(400).json({ error: "Invalid Date Entered" });
         }
-
-        let diff = utc_deadline-present_time;
-        console.log("Diff :",diff)
-
-        let mins = diff/(1000*60);
-        console.log("Mins :",mins)
-
-        let days = diff/(1000*60*60*24);
-        console.log("Days :",days)
         // console.log(utc_deadline);
 
-        if ((mins < 30) || (days > 30)){
-            return res.status(400).json({ error: "Invalid Date Entered" });
+        //Check Validation for 30 mins and 30 Days
+        let difference = utc_deadline - present_time;
+        // console.log(utc_deadline);
+        // console.log(present_time);
+        // console.log(difference);
+
+
+        //Difference in Minutes
+        let mins = difference / (1000 * 60)
+        // console.log(mins);
+
+        let days = difference / (1000 * 60 * 60 * 24);
+        // console.log(days);
+
+        //Not Less than 30 mins and Not more than 30 Days
+        if (mins < 30 || days > 30) {
+            return res.status(400).json({ error: "Invalid Date Entered, Deadline Should be More than 30 mins and Less than 30 Days" });
         }
-       
+
+        //Get Reminders
         let reminders = [];
 
-        let reminder1 = new Date((+present_time)+(diff/4));
-        // console.log("reminder 1: ",reminder1)
+        let reminder1 = new Date((+present_time) + (difference / 4));
+        // console.log(reminder1);
 
-        let reminder2 = new Date((+present_time)+(diff/2));
-        // console.log("reminder 2: ",reminder2)
+        let reminder2 = new Date((+present_time) + (difference / 2));
+        // console.log(reminder2);
 
-        let reminder3 = new Date((+present_time)+(diff/(4/3)));
-        // console.log("reminder 3: ",reminder3)
+        let reminder3 = new Date((+present_time) + (difference / (4 / 3)));
+        // console.log(reminder3);
 
-        reminders.push(reminder1,reminder2,reminder3,utc_deadline);
-        console.log(reminders)
+        reminders.push(reminder1, reminder2, reminder3, utc_deadline);
+        console.log(reminders);
+
+
         //Reading File Data
         let fileData = await fs.readFile("data.json");
         fileData = JSON.parse(fileData);
@@ -196,16 +229,34 @@ app.post("/api/task", async (req, res) => {
         let userFound = fileData.find((ele) => ele.user_id == payload.user_id)
         // console.log(userFound);
 
+        let task_id = randomString(14)
         let task_data = {
-            task_id: randomString(14),
+            task_id,
             task_name,
             deadline: utc_deadline,
-            isCompleted: false.valueOf,
+            isCompleted: false,
             reminders
         }
 
+
+        task_data.reminders.forEach((ele, i) => {
+            // console.log(ele);
+            scheduleJob(`${task_id}_${i}`, ele, () => {
+                console.log("Reminder Sent", i);
+                console.log(new Date());
+            })
+            // console.log(i);
+        })
+        console.log(scheduledJobs);
+
+
         // console.log(task_data);
         userFound.tasks.push(task_data);
+
+        task_data.reminders.forEach((ele)=> {
+            console.log()
+            scheduleJob(task)
+        })
 
         // console.log(userFound);
         // console.log(fileData);
@@ -216,6 +267,86 @@ app.post("/api/task", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" })
     }
 })
+
+/* 
+
+End Point : /api/tasks
+Method : GET
+PRIVATE
+
+*/
+
+
+
+/* 
+
+End Point : /api/task/:task_id
+Method : GET
+PRIVATE
+
+*/
+
+
+
+/* 
+
+End Point : /api/task/:task_id
+Method : DELETE
+PRIVATE
+Use : To Delete the Task from a Given ID
+
+*/
+
+
+app.delete("/api/task/:task_id", async (req, res) => {
+    try {
+        // console.log(req.params);
+        let task_id = req.params.task_id;
+        console.log(task_id);
+
+        //Check for Authorisation
+        let token = req.headers["auth-token"];
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorised Access" });
+        }
+        const payload = jwt.verify(token, "codeforindia");
+        // console.log(payload);
+        if (!payload) {
+            return res.status(401).json({ error: "Unauthorised Access" });
+        }
+
+
+        //Reading File Data
+        let fileData = await fs.readFile("data.json");
+        fileData = JSON.parse(fileData);
+
+        let userFound = fileData.find((ele) => ele.user_id == payload.user_id)
+        // console.log(userFound);
+
+        //Find Index of Given Task
+
+        let taskIndex = userFound.tasks.findIndex((ele) => ele.task_id == task_id);
+        // console.log(taskIndex);
+
+        if (taskIndex == -1) {
+            return res.status(404).json({ error: "Task Not Found" });
+        }
+
+        //Delete Element with Given Index from an Array
+        userFound.tasks.splice(taskIndex, 1)
+        // console.log(userFound.tasks);
+        // console.log(fileData);
+        await fs.writeFile("data.json", JSON.stringify(fileData));
+        res.status(200).json({ success: "Task Was Deleted Successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+
+
+
 
 
 app.listen(port, () => {
